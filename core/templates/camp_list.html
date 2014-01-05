@@ -1,0 +1,37 @@
+{% load url from future %}
+{% if present %}
+Current Camps:
+<ul>
+  {% for camp in present %}
+  <li><a href='{% url "camp" camp.slug %}'>{{ camp.name }}</a></li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+{% if unknown %}
+Unscheduled Camps:
+<ul>
+  {% for camp in unknown %}
+  <li><a href='{% url "camp" camp.slug %}'>{{ camp.name }}</a></li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+{% if future %}
+Upcoming Camps:
+<ul>
+  {% for camp in future %}
+  <li><a href='{% url "camp" camp.slug %}'>{{ camp.name }}</a></li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+{% if past %}
+Past Camps:
+<ul>
+  {% for camp in past %}
+  <li><a href='{% url "camp" camp.slug %}'>{{ camp.name }}</a></li>
+  {% endfor %}
+</ul>
+{% endif %}
+

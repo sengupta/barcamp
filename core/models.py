@@ -25,6 +25,11 @@ class Camp(BaseModel):
         # TODO: generate slug
         super(Camp, self).save(*args, **kwargs)
 
+    def clean(self):
+        # TODO:
+        # end datetime > start datetime
+        pass
+
 class UserProfileManager(models.Manager):
     def exists(self, email):
         return User.objects.filter(email__iexact=email).exists()
