@@ -12,9 +12,18 @@ class Camp(BaseModel):
     start = models.DateTimeField(null=True, blank=True)
     end = models.DateTimeField(null=True, blank=True)
     venue_address = models.TextField(null=True, blank=True)
+    slug = models.SlugField(max_length=255)
 
     def __unicode__(self):
         return self.name
+
+    def create_slug(self):
+        # TODO
+        pass
+
+    def save(self, *args, **kwargs):
+        # TODO: generate slug
+        super(Camp, self).save(*args, **kwargs)
 
 class UserProfile(BaseModel):
     user = models.OneToOneField(User)
@@ -28,6 +37,15 @@ class Session(BaseModel):
     speaker = models.ManyToManyField(UserProfile, related_name="speakers")
     camp = models.ForeignKey(Camp)
     enabled = models.BooleanField(default=False)
+    slug = models.SlugField(max_length=255)
 
     def __unicode__(self):
         return self.title
+
+    def create_slug(self):
+        # TODO
+        pass
+
+    def save(self, *args, **kwargs):
+        # TODO: generate slug
+        super(Camp, self).save(*args, **kwargs)
