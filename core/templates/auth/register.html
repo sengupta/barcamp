@@ -1,0 +1,6 @@
+{% load url from future %}
+<form method='POST' action='{% url "register" %}'>
+  {% csrf_token %}
+  {{ register_form }}
+  <input type="submit" name="Register">
+</form>
