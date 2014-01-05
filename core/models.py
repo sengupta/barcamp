@@ -12,7 +12,7 @@ class Camp(BaseModel):
     start = models.DateTimeField(null=True, blank=True)
     end = models.DateTimeField(null=True, blank=True)
     venue_address = models.TextField(null=True, blank=True)
-    slug = models.SlugField(max_length=255)
+    slug = models.SlugField(max_length=255, unique=True)
 
     def __unicode__(self):
         return self.name

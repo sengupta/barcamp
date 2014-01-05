@@ -3,15 +3,16 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 
 from .forms import RegisterForm, LoginForm
-from .models import UserProfile
+from .models import UserProfile, Camp
 
 class HomeView(TemplateView):
     def get(self, request):
         self.template_name = "home.html"
+        #TODO: Add login and registration forms to home page
         return self.render_to_response({})
 
     def post(self, request):
@@ -66,8 +67,15 @@ class DashboardView(TemplateView):
         pass
 
 class CampView(TemplateView):
-    def get(self, request):
-        pass
+    template_name="camp.html"
+    def get(self, request, camp_slug):
+        try:
+            camp = Camp.objects.get(slug=camp_slug)
+        except:
+            raise Http404
+        return self.render_to_response({
+            'camp': camp,
+            })
 
     def post(self, request):
         pass
