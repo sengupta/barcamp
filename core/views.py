@@ -45,10 +45,16 @@ class RegisterView(TemplateView):
         login(request, user)
         return HttpResponseRedirect(reverse('dashboard'))
 
+class DashboardView(TemplateView):
+    template_name = "dashboard/index.html"
+    def get(self, request):
+        return self.render_to_response({})
+
     def post(self, request):
         pass
 
-class RegisterView(TemplateView):
+class LoginView(TemplateView):
+    template_name = "auth/login.html"
     def get(self, request):
         pass
 
