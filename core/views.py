@@ -31,16 +31,9 @@ class RegisterView(TemplateView):
             return self.render_to_response({
                 'register_form': register_form
                 })
-        data = register_form.cleaned_data
-        name = data['name']
-        email = data['email']
-        password = data['password']
 
-        profile=UserProfile.profiles.create_profile(
-                name=name,
-                email=email,
-                password=password
-                )
+        profile = register_form.save()
+
         user = authenticate(username=profile.user.username, password=password)
         login(request, user)
         return HttpResponseRedirect(reverse('dashboard'))

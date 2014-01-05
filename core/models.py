@@ -1,6 +1,3 @@
-import md5
-import datetime
-
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -31,17 +28,6 @@ class Camp(BaseModel):
 class UserProfileManager(models.Manager):
     def exists(self, email):
         return User.objects.filter(email__iexact=email).exists()
-
-    def create_profile(self, name, email, password):
-        username = md5.new(str(datetime.datetime.now())).hexdigest()
-        user = User.objects.create_user(
-                username=username,
-                email=email,
-                password=password
-                )
-        profile = UserProfile(name=name, user=user)
-        profile.save()
-        return profile
 
 
 class UserProfile(BaseModel):
