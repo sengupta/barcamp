@@ -19,6 +19,9 @@ class Camp(BaseModel):
 class UserProfile(BaseModel):
     user = models.OneToOneField(User)
 
+    def __unicode__(self):
+        return unicode(self.user)
+
 class Session(BaseModel):
     title = models.CharField(max_length=100)
     description = models.TextField()
