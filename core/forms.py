@@ -3,6 +3,7 @@ import datetime
 
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 
 from .models import UserProfile
 
@@ -38,5 +39,27 @@ class RegisterForm(forms.ModelForm):
         profile.save()
         return profile
 
-class LoginForm(forms.ModelForm):
-    pass
+class LoginForm(forms.Form):
+    email = forms.EmailField(required=True)
+    password = forms.CharField(
+            required=True,
+            widget=forms.PasswordInput()
+            )
+
+    def clean(self, *args, **kwargs):
+        data = super(LoginForm, self).clean(*args, **kwargs)
+        user = User.objects.filter(email=data['email'])
+        if not user.exists():
+            raise forms.ValidationError(
+                    "No user with this email address is registered"
+                    )
+        auth_user = authenticate(
+                username=user[0].username,
+                password=data['password']
+                )
+        if not auth_user:
+            raise forms.ValidationError(
+                    "Wrong password"
+                    )
+        self.user = auth_user
+        return data

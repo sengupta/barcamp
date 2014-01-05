@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from .forms import RegisterForm
+from .forms import RegisterForm, LoginForm
 from .models import UserProfile
 
 class HomeView(TemplateView):
@@ -38,18 +38,29 @@ class RegisterView(TemplateView):
         login(request, user)
         return HttpResponseRedirect(reverse('dashboard'))
 
+class LoginView(TemplateView):
+    template_name = "auth/login.html"
+    def get(self, request):
+        login_form = LoginForm()
+        return self.render_to_response({
+            'login_form': login_form
+            })
+
+    def post(self, request):
+        login_form = LoginForm(request.POST)
+        if not login_form.is_valid():
+            return self.render_to_response({
+                'login_form': login_form
+                })
+        user = login_form.user
+        login(request, user)
+        return HttpResponseRedirect(reverse('dashboard'))
+
+
 class DashboardView(TemplateView):
     template_name = "dashboard/index.html"
     def get(self, request):
         return self.render_to_response({})
-
-    def post(self, request):
-        pass
-
-class LoginView(TemplateView):
-    template_name = "auth/login.html"
-    def get(self, request):
-        pass
 
     def post(self, request):
         pass

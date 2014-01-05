@@ -1,0 +1,6 @@
+{% load url from future %}
+<form method='POST' action='{% url "login" %}'>
+  {% csrf_token %}
+  {{ login_form }}
+  <input type="submit" name="Login">
+</form>
