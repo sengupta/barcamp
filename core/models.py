@@ -27,9 +27,14 @@ class Camp(BaseModel):
 
 class UserProfile(BaseModel):
     user = models.OneToOneField(User)
+    name = models.CharField(
+            null=False,
+            blank=False,
+            max_length=30
+            )
 
     def __unicode__(self):
-        return unicode(self.user)
+        return self.name
 
 class Session(BaseModel):
     title = models.CharField(max_length=100)
