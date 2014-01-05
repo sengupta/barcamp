@@ -17,3 +17,4 @@ class RegisterForm(forms.ModelForm):
             raise forms.ValidationError(
                     "This email address is already registered"
                     )
+        return email
