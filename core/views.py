@@ -1,5 +1,6 @@
 from django.views.generic import TemplateView
-from django.utils.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 class HomeView(TemplateView):
     def get(self):
@@ -37,16 +38,20 @@ class SessionView(TemplateView):
         pass
 
 class SessionCreateView(TemplateView):
+    @method_decorator(login_required)
     def get(self):
         pass
 
+    @method_decorator(login_required)
     def post(self):
         pass
 
 class SessionEditView(TemplateView):
+    @method_decorator(login_required)
     def get(self):
         pass
 
+    @method_decorator(login_required)
     def post(self):
         pass
 
@@ -58,16 +63,20 @@ class ProfileView(TemplateView):
         pass
 
 class ProfileCreateView(TemplateView):
+    @method_decorator(login_required)
     def get(self):
         pass
 
+    @method_decorator(login_required)
     def post(self):
         pass
 
 class ProfileEditView(TemplateView):
+    @method_decorator(login_required)
     def get(self):
         pass
 
+    @method_decorator(login_required)
     def post(self):
         pass
 
