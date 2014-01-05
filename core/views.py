@@ -3,8 +3,9 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
 class HomeView(TemplateView):
-    def get(self):
-        pass
+    def get(self, request):
+        self.template_name = "home.html"
+        return self.render_to_response({})
 
     def post(self):
         pass
