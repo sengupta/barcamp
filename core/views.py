@@ -1,24 +1,73 @@
-from django.shortcuts import render
-from django
+from django.views.generic import TemplateView
+from django.utils.decorators import login_required
+
+class HomeView(TemplateView):
+    def get(self):
+        pass
+
+    def post(self):
+        pass
+
+class LoginView(TemplateView):
+    def get(self):
+        pass
+
+    def post(self):
+        pass
+
+class RegisterView(TemplateView):
+    def get(self):
+        pass
+
+    def post(self):
+        pass
 
 class CampView(TemplateView):
-    pass
+    def get(self):
+        pass
+
+    def post(self):
+        pass
 
 class SessionView(TemplateView):
-    pass
+    def get(self):
+        pass
+
+    def post(self):
+        pass
 
 class SessionCreateView(TemplateView):
-    pass
+    def get(self):
+        pass
+
+    def post(self):
+        pass
 
 class SessionEditView(TemplateView):
-    pass
+    def get(self):
+        pass
+
+    def post(self):
+        pass
 
 class ProfileView(TemplateView):
-    pass
+    def get(self):
+        pass
+
+    def post(self):
+        pass
 
 class ProfileCreateView(TemplateView):
-    pass
+    def get(self):
+        pass
+
+    def post(self):
+        pass
 
 class ProfileEditView(TemplateView):
-    pass
+    def get(self):
+        pass
+
+    def post(self):
+        pass
 
