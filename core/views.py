@@ -7,9 +7,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
+from django.forms.models import inlineformset_factory
 
-from .forms import RegisterForm, LoginForm
-from .models import UserProfile, Camp
+from .forms import RegisterForm, LoginForm, SessionForm
+from .models import UserProfile, Camp, Session
 
 class HomeView(TemplateView):
     def get(self, request):
@@ -87,11 +88,12 @@ class CampListView(TemplateView):
 
     def post(self, request):
         pass
+
 class CampView(TemplateView):
     template_name="camp.html"
-    def get(self, request, camp_slug):
+    def get(self, request, camp):
         try:
-            camp = Camp.objects.get(slug=camp_slug)
+            camp = Camp.objects.get(slug=camp)
         except:
             raise Http404
         return self.render_to_response({
@@ -102,20 +104,48 @@ class CampView(TemplateView):
         pass
 
 class SessionView(TemplateView):
-    def get(self, request):
-        pass
+    template_name = "session/view.html"
+    def get(self, request, camp, session):
+        try:
+            camp = Camp.objects.get(slug=camp)
+            session = Session.objects.get(camp=camp, slug=session)
+        except:
+            raise Http404
+        return self.render_to_response({
+            'camp': camp,
+            'session': session
+            })
 
     def post(self, request):
         pass
 
 class SessionCreateView(TemplateView):
+    template_name = "session/create.html"
     @method_decorator(login_required)
-    def get(self, request):
-        pass
+    def get(self, request, camp):
+        form = SessionForm()
+        return self.render_to_response({
+            'form': form
+            })
 
     @method_decorator(login_required)
-    def post(self, request):
-        pass
+    def post(self, request, camp):
+        try:
+            camp = Camp.objects.get(slug=camp)
+        except:
+            raise Http404
+        # TODO: If camp is in the past, raise error
+        form = SessionForm(request.POST)
+        session = form.save(commit=False)
+        session.camp = camp
+        session.speaker = request.user.get_profile()
+        session.save()
+        return HttpResponseRedirect(
+            reverse("session_view", kwargs={
+                'camp': camp.slug,
+                'session': session.slug
+                })
+            )
 
 class SessionEditView(TemplateView):
     @method_decorator(login_required)
