@@ -1,11 +1,11 @@
-import md5
 import datetime
+from hashlib import md5
 
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
-from .models import UserProfile
+from .models import UserProfile, Session
 
 class RegisterForm(forms.ModelForm):
     class Meta:
@@ -17,6 +17,7 @@ class RegisterForm(forms.ModelForm):
             widget=forms.PasswordInput()
             )
 
+
     def clean_email(self):
         email = self.cleaned_data['email']
         if UserProfile.profiles.exists(email=email):
@@ -26,7 +27,7 @@ class RegisterForm(forms.ModelForm):
         return email
 
     def save(self, *args, **kwargs):
-        username = md5.new(str(datetime.datetime.now())).hexdigest()
+        username = md5(str(datetime.datetime.now())).hexdigest()
         email = self.cleaned_data['email']
         password = self.cleaned_data['password']
         user = User.objects.create_user(
@@ -63,3 +64,11 @@ class LoginForm(forms.Form):
                     )
         self.user = auth_user
         return data
+
+class SessionForm(forms.ModelForm):
+    class Meta:
+        model = Session
+        fields = (
+                'title',
+                'description',
+                )
