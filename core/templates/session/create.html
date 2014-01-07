@@ -1,5 +1,5 @@
 <form method="POST" action="">
   {% csrf_token %}
   {{ form }}
-  <input type="submit" value="Create Session">
+  <input type="submit" value={% if mode == "create" %}"Create Session"{% elif mode == "edit" %}"Update Session"{% endif %}>
 </form>

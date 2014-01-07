@@ -125,7 +125,8 @@ class SessionCreateView(TemplateView):
     def get(self, request, camp):
         form = SessionForm()
         return self.render_to_response({
-            'form': form
+            'form': form,
+            'mode': 'create'
             })
 
     @method_decorator(login_required)
@@ -143,18 +144,48 @@ class SessionCreateView(TemplateView):
         return HttpResponseRedirect(
             reverse("session_view", kwargs={
                 'camp': camp.slug,
-                'session': session.slug
+                'session': session.slug,
                 })
             )
 
 class SessionEditView(TemplateView):
+    template_name = "session/create.html"
     @method_decorator(login_required)
-    def get(self, request):
-        pass
+    def get(self, request, camp, session):
+        try:
+            camp = Camp.objects.get(slug=camp)
+            session = Session.objects.get(
+                    camp=camp,
+                    slug=session,
+                    speaker=request.user.get_profile()
+                    )
+        except:
+            raise Http404
+        form = SessionForm(instance=session)
+        return self.render_to_response({
+            'form': form,
+            'mode': 'edit'
+            })
 
     @method_decorator(login_required)
-    def post(self, request):
-        pass
+    def post(self, request, camp, session):
+        try:
+            camp = Camp.objects.get(slug=camp)
+            session = Session.objects.get(
+                    camp=camp,
+                    slug=session,
+                    speaker=request.user.get_profile()
+                    )
+        except:
+            raise Http404
+        form = SessionForm(instance=session, data=request.POST)
+        session = form.save()
+        return HttpResponseRedirect(
+            reverse("session_view", kwargs={
+                'camp': camp.slug,
+                'session': session.slug,
+                })
+            )
 
 class ProfileView(TemplateView):
     def get(self, request):
