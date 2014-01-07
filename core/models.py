@@ -39,8 +39,9 @@ class UserProfileManager(models.Manager):
     def exists(self, email):
         return User.objects.filter(email__iexact=email).exists()
 
-
 class UserProfile(BaseModel):
+    class Meta:
+        app_label = 'core'
     objects = models.Manager()
     profiles = UserProfileManager()
 
@@ -57,7 +58,7 @@ class UserProfile(BaseModel):
 class Session(BaseModel):
     title = models.CharField(max_length=100)
     description = models.TextField()
-    speaker = models.ManyToManyField(UserProfile, related_name="speakers")
+    speaker = models.ForeignKey(UserProfile, related_name="sessions")
     camp = models.ForeignKey(Camp)
     enabled = models.BooleanField(default=False)
     slug = models.SlugField(max_length=255)
