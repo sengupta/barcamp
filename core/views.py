@@ -65,7 +65,8 @@ class DashboardView(TemplateView):
     template_name = "dashboard/index.html"
     @method_decorator(login_required)
     def get(self, request):
-        return self.render_to_response({})
+        sessions = request.user.profile.sessions.all()
+        return self.render_to_response({'sessions': sessions})
 
     @method_decorator(login_required)
     def post(self, request):
@@ -95,11 +96,12 @@ class CampView(TemplateView):
     template_name="camp.html"
     def get(self, request, camp):
         try:
-            camp = Camp.objects.get(slug=camp)
+            camp = Camp.objects.prefetch_related('sessions').get(slug=camp)
         except:
             raise Http404
         return self.render_to_response({
             'camp': camp,
+            'sessions': camp.sessions.all(),
             })
 
     def post(self, request):
