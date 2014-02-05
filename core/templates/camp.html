@@ -1,4 +1,14 @@
+{% load url from future %}
 {{ camp.name }} <br />
 Venue: {% if camp.venue_address %}{{ camp.venue_address }}{% else %}To be announced {% endif %} <br />
 Starts: {% if camp.start %}{{ camp.start }}{% else %}To be announced {% endif %} <br />
 Ends: {% if camp.end %}{{ camp.end }}{% else %}To be announced {% endif %} <br />
+
+<a href='{% url "session_create" camp.slug %}'>Create a session</a><br />
+
+<h1>Session List</h1>
+<ul>
+  {% for session in sessions %}
+  <li><a href='{% url "session_view" session.camp.slug session.slug %}'>{{ session.title }}</a> by {{ session.speaker.name }}</li>
+  {% endfor %}
+</ul>
