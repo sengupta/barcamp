@@ -1,1 +1,8 @@
-This is the dashboard
+{% load url from future %}
+This is a list of your sessions:
+
+<ul>
+  {% for session in sessions %}
+  <li><a href='{% url "session_view" session.camp.slug session.slug %}'>{{ session.title }}</a> at <a href='{% url "camp" session.camp.slug %}'>{{ session.camp.name }}</a>.</li>
+  {% endfor %}
+</ul>
