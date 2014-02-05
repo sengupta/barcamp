@@ -24,9 +24,11 @@ class HomeView(TemplateView):
 class RegisterView(TemplateView):
     template_name = "auth/register.html"
     def get(self, request):
-        register_form = RegisterForm()
+        next = request.GET.get('next')
+        register_form = RegisterForm(initial={'next': next})
         return self.render_to_response({
                     'register_form': register_form,
+                    'next': next,
                     })
 
     def post(self, request):
@@ -40,14 +42,17 @@ class RegisterView(TemplateView):
 
         user = authenticate(username=profile.user.username, password=password)
         login(request, user)
-        return HttpResponseRedirect(reverse('dashboard'))
+        redirect = request.POST.get('next', '/')
+        return HttpResponseRedirect(redirect)
 
 class LoginView(TemplateView):
     template_name = "auth/login.html"
     def get(self, request):
-        login_form = LoginForm()
+        next = request.GET.get('next')
+        login_form = LoginForm(initial={'next': next})
         return self.render_to_response({
-            'login_form': login_form
+            'login_form': login_form,
+            'next': next,
             })
 
     def post(self, request):
@@ -58,7 +63,8 @@ class LoginView(TemplateView):
                 })
         user = login_form.user
         login(request, user)
-        return HttpResponseRedirect(reverse('dashboard'))
+        redirect = request.POST.get('next', '/')
+        return HttpResponseRedirect(redirect)
 
 
 class DashboardView(TemplateView):

@@ -4,3 +4,5 @@
   {{ login_form }}
   <input type="submit" name="Login">
 </form>
+
+Or <a href='{% url "register" %}{% if next %}?next={{ next }}{% endif %}'>register</a>?

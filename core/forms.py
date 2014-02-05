@@ -16,6 +16,10 @@ class RegisterForm(forms.ModelForm):
             required=True,
             widget=forms.PasswordInput()
             )
+    next = forms.CharField(
+            required=False,
+            widget=forms.HiddenInput()
+            )
 
 
     def clean_email(self):
@@ -28,6 +32,7 @@ class RegisterForm(forms.ModelForm):
 
     def save(self, *args, **kwargs):
         username = md5(str(datetime.datetime.now())).hexdigest()
+        # TODO: Consider using the slug mixin to create a username
         email = self.cleaned_data['email']
         password = self.cleaned_data['password']
         user = User.objects.create_user(
@@ -45,6 +50,10 @@ class LoginForm(forms.Form):
     password = forms.CharField(
             required=True,
             widget=forms.PasswordInput()
+            )
+    next = forms.CharField(
+            required=False,
+            widget=forms.HiddenInput()
             )
 
     def clean(self, *args, **kwargs):
