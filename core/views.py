@@ -107,12 +107,15 @@ class SessionView(TemplateView):
     template_name = "session/view.html"
     def get(self, request, camp, session):
         try:
-            camp = Camp.objects.get(slug=camp)
-            session = Session.objects.get(camp=camp, slug=session)
-        except:
-            raise Http404
+            session = Session.objects\
+                        .select_related('camp')\
+                        .get(slug=session)
+            if not session.camp.slug == camp:
+                raise Http404("This session is in another camp")
+        except Session.DoesNotExist:
+            raise Http404("Session does not exist")
         return self.render_to_response({
-            'camp': camp,
+            'camp': session.camp,
             'session': session
             })
 
