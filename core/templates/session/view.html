@@ -1,4 +1,4 @@
 {% load url from future %}
-Return to {% url "camp" camp.slug %} <br />
+Return to <a href='{% url "camp" camp.slug %}'>{{ camp.name }}</a> <br />
 {{ session.title }} <br />
 {{ session.description }}
