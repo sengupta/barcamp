@@ -42,15 +42,12 @@ class UserProfileManager(models.Manager):
 class UserProfile(BaseModel):
     class Meta:
         app_label = 'core'
+
     objects = models.Manager()
     profiles = UserProfileManager()
 
-    user = models.OneToOneField(User)
-    name = models.CharField(
-            null=False,
-            blank=False,
-            max_length=30
-            )
+    user = models.OneToOneField(User, related_name="profile")
+    name = models.CharField(null=False, blank=False, max_length=30)
 
     def __unicode__(self):
         return self.name
@@ -59,7 +56,7 @@ class Session(BaseModel):
     title = models.CharField(max_length=100)
     description = models.TextField()
     speaker = models.ForeignKey(UserProfile, related_name="sessions")
-    camp = models.ForeignKey(Camp)
+    camp = models.ForeignKey(Camp, related_name="sessions")
     enabled = models.BooleanField(default=False)
     slug = models.SlugField(max_length=255)
 
