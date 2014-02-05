@@ -63,9 +63,11 @@ class LoginView(TemplateView):
 
 class DashboardView(TemplateView):
     template_name = "dashboard/index.html"
+    @method_decorator(login_required)
     def get(self, request):
         return self.render_to_response({})
 
+    @method_decorator(login_required)
     def post(self, request):
         pass
 
