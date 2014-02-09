@@ -1,14 +1,73 @@
+{% extends "base.html" %}
 {% load url from future %}
-{{ camp.name }} <br />
-Venue: {% if camp.venue_address %}{{ camp.venue_address }}{% else %}To be announced {% endif %} <br />
-Starts: {% if camp.start %}{{ camp.start }}{% else %}To be announced {% endif %} <br />
-Ends: {% if camp.end %}{{ camp.end }}{% else %}To be announced {% endif %} <br />
+{% block content %}
+    <h1>{{ camp.name }}</h1>
 
-<a href='{% url "session_create" camp.slug %}'>Create a session</a><br />
+    <div class="panel callout radius">
+      <div class="row">
+        <div class="large-4 medium-4 columns">
+          <h5>Starts</h5>
+        </div>
+        <div class="large-8 medium-8 columns">
+          {% if camp.start %}{{ camp.start }}{% else %}To be announced{% endif %}
+        </div>
+      </div>
 
-<h1>Session List</h1>
-<ul>
-  {% for session in sessions %}
-  <li><a href='{% url "session_view" session.camp.slug session.slug %}'>{{ session.title }}</a> by {{ session.speaker.name }}</li>
-  {% endfor %}
-</ul>
+      <div class="row">
+        <div class="large-4 medium-4 columns">
+          <h5>Ends</h5>
+        </div>
+        <div class="large-8 medium-8 columns">
+          {% if camp.end %}{{ camp.end }}{% else %}To be announced {% endif %}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="large-4 medium-4 columns">
+          <h5>Venue</h5>
+        </div>
+        <div class="large-8 medium-8 columns">
+          <p>
+          {% if camp.venue_address %}{{ camp.venue_address }}{% else %}To be announced {% endif %} <br />
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns">
+        {{ camp.description }}
+      </div>
+    </div>
+
+
+  <div class="row">
+    <div class="large-4 columns">
+      <h3>Session List</h3>
+    </div>
+    <div class="large-4 large-offset-4 columns">
+      <a class="medium radius button right" href='{% url "session_create" camp.slug %}'>Add session</a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="large-12 columns">
+      <table width=100%>
+        <thead>
+          <tr>
+            <th width=70%>Session</th>
+            <th width=30%>Speaker</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for session in sessions %}
+          <tr>
+            <td><a href='{% url "session_view" session.camp.slug session.slug %}'>{{ session.title }}</a></td>
+            <td>{{ session.speaker.name }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock content %}

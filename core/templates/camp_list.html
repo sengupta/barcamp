@@ -1,4 +1,6 @@
 {% load url from future %}
+{% extends base.html %}
+{% block content %}
 {% if present %}
 Current Camps:
 <ul>
@@ -35,3 +37,4 @@ Past Camps:
 </ul>
 {% endif %}
 
+{% endblock content %}

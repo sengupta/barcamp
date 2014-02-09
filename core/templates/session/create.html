@@ -1,5 +1,12 @@
-<form method="POST" action="">
-  {% csrf_token %}
-  {{ form }}
-  <input type="submit" value={% if mode == "create" %}"Create Session"{% elif mode == "edit" %}"Update Session"{% endif %}>
-</form>
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+  <div class="large-12 columns">
+    <form method="POST" action="">
+      {% csrf_token %}
+      {{ form }}
+      <input class="button expand" type="submit" value={% if mode == "create" %}"Create Session"{% elif mode == "edit" %}"Update Session"{% endif %}>
+    </form>
+  </div>
+</div>
+{% endblock content %}

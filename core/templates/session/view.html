@@ -1,4 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
 {% load url from future %}
 Return to <a href='{% url "camp" camp.slug %}'>{{ camp.name }}</a> <br />
-{{ session.title }} <br />
+<h2>{{ session.title }}</h1>
 {{ session.description }}
+{% endblock content %}
