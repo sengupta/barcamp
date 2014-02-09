@@ -1,0 +1,25 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Barcamp Mumbai{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static "css/foundation.css" %}" />
+    {% block headscripts %}{% endblock headscripts %}
+    <script src="{% static "js/vendor/modernizr.js" %}"></script>
+  </head>
+  <body>
+    <!-- Top bar goes here -->
+    <div class="row">
+      <div class="large-12 columns">
+        {% block content %}{% endblock content %}
+      </div>
+    </div>
+    <script src="{% static "js/vendor/jquery.js" %}"></script>
+    <script src="{% static "js/foundation.min.js" %}"></script>
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>
