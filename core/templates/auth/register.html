@@ -1,8 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
 {% load url from future %}
-<form method='POST' action='{% url "register" %}'>
-  {% csrf_token %}
-  {{ register_form }}
-  <input type="submit" name="Register">
-</form>
+<div class="row">
+  <div class="large-8 large-centered columns">
+    <h1>Register on Barcamp Mumbai</h1>
+  </div>
+</div>
 
-Or <a href='{% url "login" %}{% if next %}?next={{ next }}{% endif %}'>login</a>?
+<div class="row">
+  <div class="large-8 large-centered columns">
+    <form method='POST' action='{% url "register" %}'>
+      {% csrf_token %}
+      {{ register_form }}
+      <input class="button expand" type="submit" name="Register" value="Register">
+    </form>
+    Or <a href='{% url "login" %}{% if next %}?next={{ next }}{% endif %}'>login</a>?
+  </div>
+</div>
+
+{% endblock content %}
