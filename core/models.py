@@ -30,6 +30,7 @@ class SlugMixin(models.Model):
 
 class Camp(BaseModel, SlugMixin):
     name = models.CharField(max_length=255)
+    # description = models.TextField(null=True, blank=True)
     start = models.DateTimeField(null=True, blank=True)
     end = models.DateTimeField(null=True, blank=True)
     # TODO: Enable timezone support
