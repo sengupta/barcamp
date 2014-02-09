@@ -10,7 +10,8 @@ from .models import UserProfile, Session
 class RegisterForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('name',)
+        fields = ('username',)
+    username = forms.CharField(required=True)
     email = forms.EmailField(required=True)
     password = forms.CharField(
             required=True,
@@ -31,7 +32,7 @@ class RegisterForm(forms.ModelForm):
         return email
 
     def save(self, *args, **kwargs):
-        username = md5(str(datetime.datetime.now())).hexdigest()
+        username = self.cleaned_data['username']
         # TODO: Consider using the slug mixin to create a username
         email = self.cleaned_data['email']
         password = self.cleaned_data['password']
