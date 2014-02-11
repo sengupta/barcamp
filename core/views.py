@@ -40,7 +40,10 @@ class RegisterView(TemplateView):
 
         profile = register_form.save()
 
-        user = authenticate(username=profile.user.username, password=password)
+        user = authenticate(
+                username=profile.user.username,
+                password=register_form.cleaned_data['password']
+                )
         login(request, user)
         redirect = request.POST.get('next', '/')
         return HttpResponseRedirect(redirect)
