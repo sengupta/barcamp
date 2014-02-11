@@ -1,7 +1,14 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "camp_base.html" %}
+{% load markdown %}
 {% load url from future %}
-Return to <a href='{% url "camp" camp.slug %}'>{{ camp.name }}</a> <br />
-<h2>{{ session.title }}</h1>
-{{ session.description }}
-{% endblock content %}
+{% block camp_content %}
+<a href='{% url "camp" camp.slug %}'>{{ camp.name }}</a>
+<h1>{{ session.title }}</h1>
+<h4 class="subheader"></h2>
+<div class="byline">
+  Posted by <strong>{{ session.speaker.name }}</strong> on <time pubdate datetime="{{ session.created }}">{{ session.created.date }}</time>
+</div>
+<div class="panel">
+  {{ session.description|striptags|markdown }}
+</div>
+{% endblock camp_content %}
