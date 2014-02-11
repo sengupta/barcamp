@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 
-from core.views import HomeView, RegisterView, LoginView, DashboardView, \
+from core.views import HomeView, RegisterView, LoginView, LogoutView,\
+                       DashboardView, \
                        CampView, CampListView, \
                        SessionCreateView, SessionEditView, SessionView \
 
@@ -16,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^dashboard/', DashboardView.as_view(), name='dashboard'),
     url(r'^accounts/register/', RegisterView.as_view(), name='register'),
     url(r'^accounts/login/', LoginView.as_view(), name='login'),
+    url(r'^accounts/logout/', LogoutView.as_view(), name='logout'),
     url(r'^camps/$', CampListView.as_view(), name='camp_list'),
     url(r'^(?P<camp>[-_a-zA-Z0-9]+)/(?P<session>[-_a-zA-Z0-9]+)/edit/$', SessionEditView.as_view(), name='session_edit'),
     url(r'^(?P<camp>[-_a-zA-Z0-9]+)/(?P<session>[-_a-zA-Z0-9]+)/$', SessionView.as_view(), name='session_view'),

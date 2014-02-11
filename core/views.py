@@ -69,6 +69,11 @@ class LoginView(TemplateView):
         redirect = request.POST.get('next', reverse('dashboard'))
         return HttpResponseRedirect(redirect)
 
+class LogoutView(TemplateView):
+    def get(self, request):
+        logout(request)
+        return HttpResponseRedirect(reverse('home_view'))
+
 class DashboardView(TemplateView):
     template_name = "dashboard/index.html"
     @method_decorator(login_required)
