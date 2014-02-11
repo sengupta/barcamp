@@ -58,6 +58,8 @@ class LoginForm(forms.Form):
 
     def clean(self, *args, **kwargs):
         data = super(LoginForm, self).clean(*args, **kwargs)
+        if self.errors:
+            return data
         user = User.objects.filter(email=data['email'])
         if not user.exists():
             raise forms.ValidationError(
