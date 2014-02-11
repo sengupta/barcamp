@@ -45,7 +45,7 @@ class RegisterView(TemplateView):
                 password=register_form.cleaned_data['password']
                 )
         login(request, user)
-        redirect = request.POST.get('next', '/')
+        redirect = request.POST.get('next', reverse('dashboard'))
         return HttpResponseRedirect(redirect)
 
 class LoginView(TemplateView):
@@ -66,9 +66,8 @@ class LoginView(TemplateView):
                 })
         user = login_form.user
         login(request, user)
-        redirect = request.POST.get('next', '/')
+        redirect = request.POST.get('next', reverse('dashboard'))
         return HttpResponseRedirect(redirect)
-
 
 class DashboardView(TemplateView):
     template_name = "dashboard/index.html"
