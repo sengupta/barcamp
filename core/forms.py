@@ -31,7 +31,7 @@ class RegisterForm(forms.ModelForm):
         return email
 
     def save(self, *args, **kwargs):
-        username = md5(str(datetime.datetime.now())).hexdigest()
+        username = md5(str(datetime.datetime.now())).hexdigest()[30]
         # TODO: Consider using the slug mixin to create a username
         email = self.cleaned_data['email']
         password = self.cleaned_data['password']
