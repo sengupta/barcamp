@@ -1,13 +1,9 @@
 {% extends "base.html" %}
 {% load url from future %}
 {% load markdown %}
+    {% block navbar_title %}
+      <h1><a href='{% url "camp" camp.slug %}'>{{ camp.name }}</a></h1>
+    {% endblock navbar_title %}
 {% block content %}
-<nav class="top-bar" data-topbar>
-<ul class="title-area">
-  <li class="name">
-  <h1><a href='{% url "camp" camp.slug %}'>{{ camp.name }}</a></h1>
-  </li>
-</ul>
-</nav>
 {% block camp_content %}{% endblock camp_content %}
 {% endblock content %}

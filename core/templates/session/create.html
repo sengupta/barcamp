@@ -1,5 +1,5 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "session/session_base.html" %}
+{% block session_content %}
 <div class="row">
   <div class="large-12 large-centered columns">
     <h1>Add session</h1>
@@ -7,11 +7,11 @@
 </div>
 <div class="row">
   <div class="large-12 columns">
-    <form method="POST" action="">
+    <form method="POST" action="" style="textarea {height: auto};">
       {% csrf_token %}
       {{ form }}
       <input class="button expand" type="submit" value={% if mode == "create" %}"Add Session"{% elif mode == "edit" %}"Update Session"{% endif %}>
     </form>
   </div>
 </div>
-{% endblock content %}
+{% endblock session_content %}

@@ -1,14 +1,17 @@
-{% extends "camp_base.html" %}
+{% extends "session/session_base.html" %}
 {% load markdown %}
 {% load url from future %}
-{% block camp_content %}
-<a href='{% url "camp" camp.slug %}'>{{ camp.name }}</a>
-<h1>{{ session.title }}</h1>
-<h4 class="subheader"></h2>
-<div class="byline">
-  Posted by <strong>{{ session.speaker.name }}</strong> on <time pubdate datetime="{{ session.created }}">{{ session.created.date }}</time>
-</div>
-<div class="panel">
-  {{ session.description|striptags|markdown }}
-</div>
-{% endblock camp_content %}
+{% block session_content %}
+    <div>
+      <h3>{{ session.title }}</h1>
+    </div>
+    <div class="byline" style="margin-bottom:20px;">
+      Posted by <strong>{{ session.speaker.name }}</strong> on <time pubdate datetime="{{ session.created }}">{{ session.created.date }}</time>
+      {% if request.user.is_authenticated %}
+      {% if session.speaker.id == request.user.id %}(<a href='{% url 'session_edit' session.camp.slug session.slug %}'>Edit</a>){% endif %}
+      {% endif %}
+    </div>
+    <div class="panel radius callout">
+      {{ session.description|striptags|markdown }}
+    </div>
+{% endblock session_content %}

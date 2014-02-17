@@ -1,8 +1,16 @@
+{% extends "base.html" %}
 {% load url from future %}
-This is a list of your sessions:
 
-<ul>
-  {% for session in sessions %}
-  <li><a href='{% url "session_view" session.camp.slug session.slug %}'>{{ session.title }}</a> at <a href='{% url "camp" session.camp.slug %}'>{{ session.camp.name }}</a>.</li>
-  {% endfor %}
-</ul>
+{% block content %}
+{% if sessions|length == 0 %}
+  <div class="panel callout radius">
+    You haven't added any sessions yet
+  </div>
+{% else %}
+  <ul>
+    {% for session in sessions %}
+    <li><a href='{% url "session_view" session.camp.slug session.slug %}'>{{ session.title }}</a> at <a href='{% url "camp" session.camp.slug %}'>{{ session.camp.name }}</a>.</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% endblock content %}

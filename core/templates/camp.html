@@ -2,8 +2,6 @@
 {% load url from future %}
 {% load markdown %}
 {% block camp_content %}
-    <h1>{{ camp.name }}</h1>
-
     <div class="panel callout radius">
       <div class="row">
         <div class="large-4 medium-4 columns">
@@ -53,25 +51,24 @@
 
   <div class="row">
     <div class="large-12 columns">
-      <table width=100%>
-        <thead>
-          <tr>
-            <th width=70%>Session</th>
-            <th width=30%>Speaker</th>
-          </tr>
-        </thead>
-        <tbody>
-        {% for session in sessions %}
-          <tr>
-            <td><a href='{% url "session_view" session.camp.slug session.slug %}'>{{ session.title }}</a></td>
-            <td>{{ session.speaker.name }}</td>
-          </tr>
-          <tr>
-            <td colspan="2">{{ session.description|striptags|markdown }}</td>
-          </tr>
-        {% endfor %}
-        </tbody>
-      </table>
+      {% for session in sessions %}
+      <hr></hr>
+      <div class="row">
+        <div class="large-7 columns">
+          <h4><a href='{% url "session_view" session.camp.slug session.slug %}'>{{ session.title }}</a></h4>
+        </div>
+        <div class="large-2 columns"></div>
+        <div class="large-3 columns">
+          <h4 class="right subheader">{{ session.speaker.name }}</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="large-12 columns">
+          {{ session.description|striptags|markdown }}
+        </div>
+      </div>
+      {% endfor %}
+
     </div>
   </div>
 {% endblock camp_content %}
