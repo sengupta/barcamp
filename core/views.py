@@ -33,9 +33,11 @@ class RegisterView(TemplateView):
 
     def post(self, request):
         register_form = RegisterForm(data=request.POST)
+        next = request.POST.get('next')
         if not register_form.is_valid():
             return self.render_to_response({
-                'register_form': register_form
+                'register_form': register_form,
+                'next': next,
                 })
 
         profile = register_form.save()
@@ -45,7 +47,10 @@ class RegisterView(TemplateView):
                 password=register_form.cleaned_data['password']
                 )
         login(request, user)
-        redirect = request.POST.get('next', reverse('dashboard'))
+        if next:
+            redirect = next
+        else:
+            redirect = reverse('home_view')
         return HttpResponseRedirect(redirect)
 
 class LoginView(TemplateView):
@@ -60,13 +65,18 @@ class LoginView(TemplateView):
 
     def post(self, request):
         login_form = LoginForm(request.POST)
+        next = request.POST.get('next')
         if not login_form.is_valid():
             return self.render_to_response({
-                'login_form': login_form
+                'login_form': login_form,
+                'next': next
                 })
         user = login_form.user
         login(request, user)
-        redirect = request.POST.get('next', reverse('dashboard'))
+        if next:
+            redirect = next
+        else:
+            redirect = reverse('home_view')
         return HttpResponseRedirect(redirect)
 
 class LogoutView(TemplateView):
