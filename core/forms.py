@@ -83,3 +83,11 @@ class SessionForm(forms.ModelForm):
                 'title',
                 'description',
                 )
+        widgets = {
+                'description': forms.Textarea(
+                    attrs={
+                        'rows': 8,
+                        'style': "height: auto;",
+                        }
+                    )
+                }
