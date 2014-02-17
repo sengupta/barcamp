@@ -153,10 +153,15 @@ class SessionCreateView(TemplateView):
     template_name = "session/create.html"
     @method_decorator(login_required)
     def get(self, request, camp):
+        try:
+            camp = Camp.objects.get(slug=camp)
+        except:
+            raise Http404
         form = SessionForm()
         return self.render_to_response({
             'form': form,
-            'mode': 'create'
+            'mode': 'create',
+            'camp': camp,
             })
 
     @method_decorator(login_required)
@@ -194,7 +199,8 @@ class SessionEditView(TemplateView):
         form = SessionForm(instance=session)
         return self.render_to_response({
             'form': form,
-            'mode': 'edit'
+            'mode': 'edit',
+            'camp': camp,
             })
 
     @method_decorator(login_required)
