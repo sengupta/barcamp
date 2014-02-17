@@ -1,6 +1,7 @@
-{% extends "base.html" %}
+{% extends "camp_base.html" %}
 {% load url from future %}
-{% block content %}
+{% load markdown %}
+{% block camp_content %}
     <h1>{{ camp.name }}</h1>
 
     <div class="panel callout radius">
@@ -65,9 +66,12 @@
             <td><a href='{% url "session_view" session.camp.slug session.slug %}'>{{ session.title }}</a></td>
             <td>{{ session.speaker.name }}</td>
           </tr>
+          <tr>
+            <td colspan="2">{{ session.description|striptags|markdown }}</td>
+          </tr>
         {% endfor %}
         </tbody>
       </table>
     </div>
   </div>
-{% endblock content %}
+{% endblock camp_content %}
