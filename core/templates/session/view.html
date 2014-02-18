@@ -9,7 +9,7 @@
       Posted by <strong>{{ session.speaker.name }}</strong> on <time pubdate datetime="{{ session.created }}">{{ session.created.date }}</time>
       {% if request.user.is_authenticated %}
       [{{ session.speaker.id }} {{ request.user.id }}]
-      {% if session.speaker.id == request.user.id %}(<a href='{% url 'session_edit' session.camp.slug session.slug %}'>Edit</a>){% endif %}
+      {% if session.speaker.user.id == request.user.id %}(<a href='{% url 'session_edit' session.camp.slug session.slug %}'>Edit</a>){% endif %}
       {% endif %}
     </div>
     <div class="panel radius callout">
