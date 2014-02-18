@@ -64,7 +64,11 @@ WSGI_APPLICATION = 'barcamp.wsgi.application'
 import dj_database_url
 
 DATABASES = {
-        'default': dj_database_url.config()
+        'default': dj_database_url.config(
+            default="sqlite:////{base_dir}/db.sqlite3".format(
+                base_dir=BASE_DIR,
+                )
+            )
 }
 
 # Internationalization
