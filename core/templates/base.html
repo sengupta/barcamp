@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}Barcamp Mumbai{% endblock title %}</title>
+    <title>{% block title %}{{ CAMP_NAME }}{% endblock title %}</title>
     <link rel="stylesheet" href="{% static "css/foundation.css" %}" />
     {% block headscripts %}{% endblock headscripts %}
     <script src="{% static "js/vendor/modernizr.js" %}"></script>
@@ -16,7 +16,7 @@
     <ul class="title-area">
       <li class="name">
       {% block navbar_title %}
-      <h1><a href='{% url "home_view" %}'>Barcamp Mumbai</a></h1>
+      <h1><a href='{% url "home_view" %}'>{{ CAMP_NAME }}</a></h1>
       {% endblock navbar_title %}
       </li>
       <li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>

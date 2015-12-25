@@ -4,6 +4,7 @@ from hashlib import md5
 from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+from django.utils.timezone import utc
 
 class BaseModel(models.Model):
     class Meta:
@@ -40,7 +41,7 @@ class Camp(BaseModel, SlugMixin):
         return self.name
 
     def save(self, *args, **kwargs):
-        if not self.id: # Created:
+        if not self.slug: # Created:
             self.create_slug(self.name)
         super(Camp, self).save(*args, **kwargs)
 
@@ -48,6 +49,14 @@ class Camp(BaseModel, SlugMixin):
         # TODO:
         # end datetime > start datetime
         pass
+
+    def is_over(self):
+        return datetime.datetime.now().replace(tzinfo=utc) > self.end
+
+    def html_venue_address(self):
+        if self.venue_address:
+            return '<br />'.join(self.venue_address.split('\n'))
+        return None
 
 class UserProfileManager(models.Manager):
     def exists(self, email):

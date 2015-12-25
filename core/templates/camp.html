@@ -44,9 +44,11 @@
     <div class="large-4 columns">
       <h3>Session List</h3>
     </div>
+    {% if not camp.is_over %}
     <div class="large-4 large-offset-4 columns">
       <a class="medium radius button right" href='{% url "session_create" camp.slug %}'>Add session</a>
     </div>
+    {% endif %}
   </div>
 
   <div class="row">

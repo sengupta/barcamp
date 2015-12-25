@@ -51,6 +51,7 @@ MIDDLEWARE_CLASSES = (
 TEMPLATE_CONTEXT_PROCESSORS = (
         'django.contrib.auth.context_processors.auth',
         'django.core.context_processors.request',
+        'core.context_processors.template_vars',
         )
 
 ROOT_URLCONF = 'barcamp.urls'
@@ -91,3 +92,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_PROFILE_MODULE = 'core.userprofile'
+
+CAMP_NAME = os.getenv("CAMP_NAME")
+CAMP_TYPE = os.getenv("CAMP_TYPE")
+PLANNING_HOME = os.getenv("PLANNING_HOME")
