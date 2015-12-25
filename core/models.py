@@ -41,7 +41,7 @@ class Camp(BaseModel, SlugMixin):
         return self.name
 
     def save(self, *args, **kwargs):
-        if not self.id: # Created:
+        if not self.slug: # Created:
             self.create_slug(self.name)
         super(Camp, self).save(*args, **kwargs)
 
