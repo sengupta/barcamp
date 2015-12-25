@@ -23,6 +23,7 @@ class HomeView(TemplateView):
         return self.render_to_response(dict(
             camp_name=settings.CAMP_NAME,
             camp_type=settings.CAMP_TYPE,
+            home_blurb=settings.HOME_BLURB,
             planning_home=settings.PLANNING_HOME,
             upcoming_camp=upcoming_camp))
 
