@@ -1,50 +1,54 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Scicamp Mumbai</h1>
+  <h1>{{ camp_name }}</h1>
 
     <div class="panel">
-      <p>Scicamp Mumbai is a <span data-tooltip class="has-tip" title='"Free" as in "libre" AND as in "gratis"'>free</span>, <a href='http://barcampmumbai.herokuapp.com/'>barcamp style</a>, participant lead conference that discusses science and technology.</p>
+      <p>{{ camp_name }} is a <span data-tooltip class="has-tip" title='"Free" as in "libre" AND as in "gratis"'>free</span>, <a href='http://barcampmumbai.herokuapp.com/'>barcamp style</a>, participant lead conference without a preset agenda.</p>
       <p>A bunch of smart people meet up over the weekend, put up a schedule on a wall and spend the rest of their time taking up sessions and discussions with each other.</p>
       <p>There is no audience. Only participants. So host a session, help out with planning, ask questions, spread the word- Everybody is invited. There really are no walls.</p>
     </div>
 
+    {% if upcoming_camp %}
     <div class="panel callout radius">
       <div class="alert-box radius">
-        <h4 class="text-center">Upcoming Scicamp</h4>
+        <h4 class="text-center">Upcoming {{ camp_type }}</h4>
       </div>
-      <h4><a href="scm3">Scicamp Mumbai 3</a></h4>
+      <h4><a href="scm3">{{ upcoming_camp.name }}</a></h4>
 
       <div class="row">
         <div class="large-4 medium-4 columns">
-          <h5>Date</h5>
+          <h5>Start Date</h5>
         </div>
         <div class="large-8 medium-8 columns">
-          7 March, 2015
+          {{ upcoming_camp.start }}
         </div>
       </div>
 
       <div class="row">
         <div class="large-4 medium-4 columns">
-          <h5>Time</h5>
+          <h5>End Date</h5>
         </div>
         <div class="large-8 medium-8 columns">
-          9am to 5pm
+          {{ upcoming_camp.end }}
         </div>
       </div>
 
+      {% if upcoming_camp.venue_address %}
       <div class="row">
         <div class="large-4 medium-4 columns">
           <h5>Venue</h5>
         </div>
         <div class="large-8 medium-8 columns">
-          <p>Maker's Asylum<br />
-          4th Floor, Tower 2A<br />
-          Indiabulls Center, Senapati Bapat Marg,<br />
-          Lower Parel, Mumbai 400012</p>
+          <p>{{ upcoming_camp.html_venue_address|safe }}</p>
         </div>
       </div>
+      {% endif %}
 
     </div>
+    {% else %}
+    There are no upcoming {{ camp_type }}s planned right now.
+      {% if planning_home %}<a href="">Click here</a>to join the planning list{% endif %}
+    {% endif %}
 
 
 {% endblock content %}

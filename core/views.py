@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.forms.models import inlineformset_factory
+from django.conf import settings
 
 from .forms import RegisterForm, LoginForm, SessionForm
 from .models import UserProfile, Camp, Session
@@ -15,8 +16,15 @@ from .models import UserProfile, Camp, Session
 class HomeView(TemplateView):
     def get(self, request):
         self.template_name = "home.html"
-        #TODO: Add login and registration forms to home page
-        return self.render_to_response({})
+        try:
+            upcoming_camp = Camp.objects.filter(start__gte=datetime.datetime.now()).earliest('created')
+        except Camp.DoesNotExist:
+            upcoming_camp = None
+        return self.render_to_response(dict(
+            camp_name=settings.CAMP_NAME,
+            camp_type=settings.CAMP_TYPE,
+            planning_home=settings.PLANNING_HOME,
+            upcoming_camp=upcoming_camp))
 
     def post(self, request):
         pass

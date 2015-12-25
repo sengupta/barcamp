@@ -53,6 +53,11 @@ class Camp(BaseModel, SlugMixin):
     def is_over(self):
         return datetime.datetime.now().replace(tzinfo=utc) > self.end
 
+    def html_venue_address(self):
+        if self.venue_address:
+            return '<br />'.join(self.venue_address.split('\n'))
+        return None
+
 class UserProfileManager(models.Manager):
     def exists(self, email):
         return User.objects.filter(email__iexact=email).exists()
