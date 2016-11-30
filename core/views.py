@@ -128,7 +128,7 @@ class CampView(TemplateView):
     template_name="camp.html"
     def get(self, request, camp):
         try:
-            camp = Camp.objects.prefetch_related('sessions').get(slug=camp)
+            camp = Camp.objects.prefetch_related('sessions').get(slug__iexact=camp)
         except:
             raise Http404
         return self.render_to_response({
